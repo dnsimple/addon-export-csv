@@ -10,7 +10,8 @@ module DnsimpleHeroku
     end
 
     get "/callback" do
-      @params = params
+      token = params[:code]
+      @output = `curl http://localhost:3000/v2/1/contacts?_api=1 -H "Authorization: #{token}"`
       haml :callback
     end
 
