@@ -16,7 +16,7 @@ module DnsimpleHeroku
       haml :callback
     end
 
-    get "/:account_id" do
+    get "/" do
 
       redirect "http://localhost:3000/oauth/authorize?client_id=#{CLIENT_ID}&response_type=code&state=1234567"
 
