@@ -11,7 +11,7 @@ module DnsimpleHeroku
 
     get "/callback" do
       @params = params
-      haml "callback"
+      haml :callback
     end
 
     get "/:account_id" do
