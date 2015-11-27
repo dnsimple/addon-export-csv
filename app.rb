@@ -13,18 +13,6 @@ module DnsimpleHeroku
       headers({ "X-Frame-Options" => "ALLOWALL" })
     end
 
-    get "/contacts/:account_id" do
-      account_id = params[:account_id]
-      access_token = $accounts[account_id] or halt 403
-
-      @contacts = HTTParty.get("http://localhost:3000/v2/#{account_id}/contacts",
-        query: { "_api" => "1" },
-        headers: { "Authorization" => "Bearer #{access_token}"
-      })
-
-      haml :contacts
-    end
-
 
     get "/domains/:account_id" do
     end
