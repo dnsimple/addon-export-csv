@@ -21,14 +21,14 @@ module DnsimpleHeroku
                   redirect_uri: "http://fast-wave-9818.herokuapp.com/access_token",
                   state: "1234567" }
 
-      @response = HTTParty.get("https://dnsimple.com/oauth/access_token",
+      @response = HTTParty.get("http://localhost:3000/oauth/access_token",
                              query: options)
 
       haml :callback
     end
 
     get "/" do
-      redirect "https://dnsimple.com/oauth/authorize?client_id=#{CLIENT_ID}&response_type=code&state=1234567"
+      redirect "http://localhost:3000/oauth/authorize?client_id=#{CLIENT_ID}&response_type=code&state=1234567"
     end
 
     get "/access_token" do
