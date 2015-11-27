@@ -4,8 +4,8 @@ require 'httparty'
 module DnsimpleHeroku
   class App < Sinatra::Base
 
-    CLIENT_ID = "637370e33040bf54"
-    CLIENT_SECRET = "Rxb0fPyiCY2onYRyUStaZvwZww8SzgaB"
+    CLIENT_ID = "f3cf52ebefdf35e6"
+    CLIENT_SECRET = "lCARO1WQBxCTWgFUVDXiIjNePahgsFOO"
 
     after do
         headers({ "X-Frame-Options" => "ALLOWALL" })
@@ -21,8 +21,9 @@ module DnsimpleHeroku
                   redirect_uri: "http://fast-wave-9818.herokuapp.com/access_token",
                   state: "1234567" }
 
-      response = HTTParty.get("http://localhost:3000/oauth/access_token",
+      @response = HTTParty.get("https://dnsimple.com/oauth/access_token",
                              query: options)
+
       haml :callback
     end
 
