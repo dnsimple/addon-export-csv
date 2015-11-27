@@ -7,33 +7,74 @@ module DnsimpleHeroku
     CLIENT_ID = "637370e33040bf54"
     CLIENT_SECRET = "Rxb0fPyiCY2onYRyUStaZvwZww8SzgaB"
 
+    $accounts = {}
+
     after do
-        headers({ "X-Frame-Options" => "ALLOWALL" })
+      headers({ "X-Frame-Options" => "ALLOWALL" })
+    end
+
+    get "/contacts/:account_id" do
+      account_id = params[:account_id]
+      access_token = $accounts[account_id] or halt 403
+
+      @contacts = HTTParty.get("http://localhost:3000/v2/#{account_id}/contacts",
+        query: { "_api" => "1" },
+        headers: { "Authorization" => "Bearer #{access_token}"
+      })
+
+      haml :contacts
+    end
+
+
+    get "/domains/:account_id" do
+    end
+
+    get "/domains/:account_id/csv" do
+      account_id = params[:account_id]
+      access_token = $accounts[account_id] or halt 403
+
+      domains = HTTParty.get("http://localhost:3000/v2/#{account_id}/domains",
+        query: { "_api" => "1" },
+        headers: { "Authorization" => "Bearer #{access_token}"
+      })
+
+      csv = CSV.generate do |csv|
+        domains["data"].each do |domain|
+          csv << [ domain["id"], domain["name"] ]
+        end
+      end
+
+      haml csv
     end
 
     get "/callback" do
-      @params = params
-      token = params[:code]
+      oauth = HTTParty.post("http://localhost:3000/oauth/access_token", body: {
+        client_id: CLIENT_ID,
+        client_secret: CLIENT_SECRET,
+        code: params[:code],
+        state: "1234567"
+      })
 
-      options = { client_id: CLIENT_ID,
-                  client_secret: CLIENT_SECRET,
-                  code: params[:code],
-                  redirect_uri: "http://fast-wave-9818.herokuapp.com/access_token",
-                  state: "1234567" }
-
-      @response = HTTParty.get("http://localhost:3000/oauth/access_token",
-                             query: options)
+      @account_id = oauth["account_id"].to_s
+      access_token = oauth["access_token"].to_s
+      $accounts[@account_id] = access_token
 
       haml :callback
     end
 
-    get "/" do
-      redirect "http://localhost:3000/oauth/authorize?client_id=#{CLIENT_ID}&response_type=code&state=1234567"
-    end
+    get "/:account_id" do
+      account_id = params[:account_id].to_s
 
-    get "/access_token" do
-      @params = params
-      haml :access_token
+      puts $accounts
+      puts account_id
+      puts $accounts[account_id].inspect
+      puts $accounts.has_key?(account_id)
+
+      if $accounts.has_key?(account_id)
+        redirect "/domains/#{account_id}/csv"
+      else
+        redirect "http://localhost:3000/oauth/authorize?client_id=#{CLIENT_ID}&response_type=code&state=1234567"
+      end
     end
 
   end
