@@ -2,12 +2,41 @@ require 'sinatra/base'
 require 'httparty'
 
 module DnsimpleHeroku
+  class ApiClient
+    def initialize(url, port)
+      @url = url
+      @port = port
+    end
+
+    def domains(account_id, access_token)
+      get("/#{account_id}/domains", access_token)
+    end
+
+    private
+
+    def get(path, access_token)
+      query   = { "_api" => "1" }
+      headers = { "Authorization" => "Bearer #{access_token}" }
+      HTTParty.get("#{base_url}#{path}", query: query, headers: headers)
+    end
+
+    def base_url
+      "#{@url}:#{@port}/v2"
+    end
+  end
+
   class App < Sinatra::Base
 
-    CLIENT_ID = "637370e33040bf54"
-    CLIENT_SECRET = "Rxb0fPyiCY2onYRyUStaZvwZww8SzgaB"
+    API_ENDPOINT = "http://localhost"
+    API_PORT = "3000"
+    CLIENT_ID = "58cfec7705d10221"
+    CLIENT_SECRET = "h3YtB5rX0hL1mzkiUP1sN7Z6dMFiWqDf"
 
     $accounts = {}
+
+    before do
+      @api_client = ApiClient.new(API_ENDPOINT, API_PORT)
+    end
 
     after do
       headers({ "X-Frame-Options" => "ALLOWALL" })
@@ -21,10 +50,7 @@ module DnsimpleHeroku
       account_id = params[:account_id]
       access_token = $accounts[account_id] or halt 403
 
-      domains = HTTParty.get("http://localhost:3000/v2/#{account_id}/domains",
-        query: { "_api" => "1" },
-        headers: { "Authorization" => "Bearer #{access_token}"
-      })
+      domains = @api_client.domains(account_id, access_token)
 
       csv = CSV.generate do |csv|
         domains["data"].each do |domain|
