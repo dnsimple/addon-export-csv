@@ -28,7 +28,7 @@ module DnsimpleHeroku
     end
 
     get "/" do
-      redirect "http://localhost:3000/oauth/authorize?client_id=#{CLIENT_ID}&response_type=code&state=1234567"
+      redirect "https://dnsimple.com/oauth/authorize?client_id=#{CLIENT_ID}&response_type=code&state=1234567"
     end
 
     get "/access_token" do
