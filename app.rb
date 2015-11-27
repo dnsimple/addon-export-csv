@@ -14,22 +14,23 @@ module DnsimpleHeroku
       "#{@url}:#{@port}/oauth/authorize?client_id=#{@client_id}&response_type=code&state=1234567"
     end
 
+    def authorization(code)
+      body = { client_id: @client_id, client_secret: @client_secret, code: code, state: "1234567" }
+      auth = HTTParty.post("#{@url}:#{@port}/oauth/access_token", body: body)
+
+      Auth.new(auth["account_id"].to_s, auth["access_token"].to_s)
+    end
+
     def domains(account_id, access_token)
-      get("/#{account_id}/domains", access_token)
+      query    = { "_api" => "1" }
+      headers  = { "Authorization" => "Bearer #{access_token}" }
+      response = HTTParty.get("#{@url}:#{@port}/v2/#{account_id}/domains", query: query, headers: headers)
+      response["data"]
     end
 
-    private
-
-    def get(path, access_token)
-      query   = { "_api" => "1" }
-      headers = { "Authorization" => "Bearer #{access_token}" }
-      HTTParty.get("#{base_url}#{path}", query: query, headers: headers)
-    end
-
-    def base_url
-      "#{@url}:#{@port}/v2"
-    end
+    Auth = Struct.new(:account_id, :access_token)
   end
+
 
   class App < Sinatra::Base
 
@@ -48,7 +49,6 @@ module DnsimpleHeroku
       headers({ "X-Frame-Options" => "ALLOWALL" })
     end
 
-
     get "/domains/:account_id" do
     end
 
@@ -59,7 +59,7 @@ module DnsimpleHeroku
       domains = @api_client.domains(account_id, access_token)
 
       csv = CSV.generate do |csv|
-        domains["data"].each do |domain|
+        domains.each do |domain|
           csv << [ domain["id"], domain["name"] ]
         end
       end
@@ -68,16 +68,10 @@ module DnsimpleHeroku
     end
 
     get "/callback" do
-      oauth = HTTParty.post("http://localhost:3000/oauth/access_token", body: {
-        client_id: CLIENT_ID,
-        client_secret: CLIENT_SECRET,
-        code: params[:code],
-        state: "1234567"
-      })
+      auth = @api_client.authorization(params[:code])
 
-      @account_id = oauth["account_id"].to_s
-      access_token = oauth["access_token"].to_s
-      $accounts[@account_id] = access_token
+      @account_id = auth.account_id
+      $accounts[@account_id] = auth.access_token
 
       haml :callback
     end
