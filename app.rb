@@ -53,11 +53,6 @@ module DnsimpleHeroku
     get "/:account_id" do
       account_id = params[:account_id].to_s
 
-      puts $accounts
-      puts account_id
-      puts $accounts[account_id].inspect
-      puts $accounts.has_key?(account_id)
-
       if $accounts.has_key?(account_id)
         redirect "/domains/#{account_id}/csv"
       else
