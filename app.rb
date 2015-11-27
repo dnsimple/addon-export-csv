@@ -4,8 +4,8 @@ require 'httparty'
 module DnsimpleHeroku
   class App < Sinatra::Base
 
-    CLIENT_ID = "f3cf52ebefdf35e6"
-    CLIENT_SECRET = "lCARO1WQBxCTWgFUVDXiIjNePahgsFOO"
+    CLIENT_ID = "637370e33040bf54"
+    CLIENT_SECRET = "Rxb0fPyiCY2onYRyUStaZvwZww8SzgaB"
 
     after do
         headers({ "X-Frame-Options" => "ALLOWALL" })
