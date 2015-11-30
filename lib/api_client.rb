@@ -14,9 +14,13 @@ class ApiClient
 
   def authorization(code)
     body = { client_id: @client_id, client_secret: @client_secret, code: code, state: "1234567" }
-    auth = HTTParty.post("#{@url}:#{@port}/oauth/access_token", body: body)
+    response = HTTParty.post("#{@url}:#{@port}/oauth/access_token", body: body)
 
-    Auth.new(auth["account_id"].to_s, auth["access_token"].to_s)
+    if response.success?
+      Auth.new(response["account_id"].to_s, response["access_token"].to_s)
+    else
+      raise RuntimeError, "API call failed: #{response["message"]}"
+    end
   end
 
   def domains(account_id, access_token)
