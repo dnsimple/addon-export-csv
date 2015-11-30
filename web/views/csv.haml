@@ -1,0 +1,15 @@
+%table
+  %th
+    %td Domain id
+    %td Domain name
+
+  -@domains.each do |domain|
+    %tr
+      %td
+        =domain["id"]
+      %td
+        =domain["name"]
+
+%form{method: "POST"}
+  %button{type: "submit"}
+    Download CSV

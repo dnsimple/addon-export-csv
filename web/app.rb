@@ -24,15 +24,22 @@ class CsvExportAddon < Sinatra::Base
 
   get "/domains/:account_id/csv" do
     account = @accounts.get(params[:account_id]) or halt 403
+    @domains = @api_client.domains(account.id, account.access_token)
+
+    haml :csv
+  end
+
+  post "/domains/:account_id/csv" do
+    account = @accounts.get(params[:account_id]) or halt 403
     domains = @api_client.domains(account.id, account.access_token)
 
-    csv = CSV.generate do |csv|
+    content_type "application/csv"
+
+    CSV.generate do |csv|
       domains.each do |domain|
         csv << [ domain["id"], domain["name"] ]
       end
     end
-
-    haml csv
   end
 
 
