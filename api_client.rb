@@ -1,3 +1,5 @@
+require 'httparty'
+
 class ApiClient
   def initialize(url, port, client_id, client_secret)
     @url = url
