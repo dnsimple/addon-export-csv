@@ -53,7 +53,7 @@ class CsvExportAddon < Sinatra::Base
 
     @accounts.store(Account.new(auth.account_id, auth.access_token))
 
-    haml :callback
+    redirect "/domains/#{auth.account_id}/csv"
   end
 
   get "/:account_id" do
