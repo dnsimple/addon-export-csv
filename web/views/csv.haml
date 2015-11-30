@@ -1,4 +1,8 @@
 :sass
+  body
+    height: 100%
+    font-family: sans-serif
+    font-size: 100%
   table
     text-align: left
     padding: 5px
@@ -12,6 +16,19 @@
   td
     padding: 5px 20px 5px 0px
     border-bottom: 1px solid gainsboro
+  button
+    padding: .5rem 1rem
+    border: 0
+    border: 2px solid coral
+    color: coral
+    background: white
+    border-radius: 2px
+    font-weight: bold
+    cursor: pointer
+
+%form{method: "POST"}
+  %button{type: "submit"}
+    Download CSV
 
 %table
   %tr
@@ -33,6 +50,3 @@
       %td
         =domain.fetch("auto_renew")
 
-%form{method: "POST"}
-  %button{type: "submit"}
-    Download CSV
