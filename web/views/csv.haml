@@ -1,14 +1,37 @@
-%table
-  %th
-    %td Domain id
-    %td Domain name
+:sass
+  table
+    text-align: left
+    padding: 5px
+    border-spacing: 0
+    margin-bottom: 20px
+  th
+    padding: 5px 20px 5px 0px
+    font-height: 500
+    text-align: left
+    padding-bottom: 10px
+  td
+    padding: 5px 20px 5px 0px
+    border-bottom: 1px solid gainsboro
 
+%table
+  %tr
+    %th Domain Name
+    %th State
+    %th Expiration
+    %th Whois privacy
+    %th Auto renewal
   -@domains.each do |domain|
     %tr
       %td
-        =domain["id"]
+        =domain.fetch("name")
       %td
-        =domain["name"]
+        =domain.fetch("state")
+      %td
+        =domain.fetch("expires_on") || "-"
+      %td
+        =domain.fetch("private_whois")
+      %td
+        =domain.fetch("auto_renew")
 
 %form{method: "POST"}
   %button{type: "submit"}

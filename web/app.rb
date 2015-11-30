@@ -37,7 +37,13 @@ class CsvExportAddon < Sinatra::Base
 
     CSV.generate do |csv|
       domains.each do |domain|
-        csv << [ domain["id"], domain["name"] ]
+        csv << [
+          domain["name"],
+          domain["state"],
+          domain["expires_on"],
+          domain["private_whois"],
+          domain["auto_renew"]
+        ]
       end
     end
   end
