@@ -1,8 +1,8 @@
 require 'sinatra/base'
 
-require_relative 'account'
-require_relative 'account_storage'
-require_relative 'api_client'
+require_relative '../lib/account'
+require_relative '../lib/account_storage'
+require_relative '../lib/api_client'
 
 class CsvExportAddon < Sinatra::Base
 
