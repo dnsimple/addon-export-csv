@@ -6,15 +6,14 @@ require_relative '../lib/api_client'
 
 class CsvExportAddon < Sinatra::Base
 
-  API_ENDPOINT = "http://localhost"
-  API_PORT = "3000"
-  CLIENT_ID = "58cfec7705d10221"
-  CLIENT_SECRET = "h3YtB5rX0hL1mzkiUP1sN7Z6dMFiWqDf"
-
-
   before do
     @accounts   = RedisAccountStorage.new
-    @api_client = ApiClient.new(API_ENDPOINT, API_PORT, CLIENT_ID, CLIENT_SECRET)
+    @api_client = ApiClient.new(
+      ENV["API_ENDPOINT"],
+      ENV["API_PORT"],
+      ENV["CLIENT_ID"],
+      ENV["CLIENT_SECRET"]
+    )
   end
 
   after do

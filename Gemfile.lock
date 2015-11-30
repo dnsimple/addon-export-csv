@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    dotenv (2.0.2)
     haml (4.0.7)
       tilt
     httparty (0.13.3)
@@ -22,7 +23,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  dotenv
   haml
   httparty
   sass
   sinatra
+
+BUNDLED WITH
+   1.10.6
