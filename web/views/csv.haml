@@ -1,52 +1,25 @@
-:sass
-  body
-    height: 100%
-    font-family: sans-serif
-    font-size: 100%
-  table
-    text-align: left
-    padding: 5px
-    border-spacing: 0
-    margin-bottom: 20px
-  th
-    padding: 5px 20px 5px 0px
-    font-height: 500
-    text-align: left
-    padding-bottom: 10px
-  td
-    padding: 5px 20px 5px 0px
-    border-bottom: 1px solid gainsboro
-  button
-    padding: .5rem 1rem
-    border: 0
-    border: 2px solid coral
-    color: coral
-    background: white
-    border-radius: 2px
-    font-weight: bold
-    cursor: pointer
-
 %form{method: "POST"}
-  %button{type: "submit"}
+  %button.button{type: "submit"}
     Download CSV
 
-%table
-  %tr
-    %th Domain Name
-    %th State
-    %th Expiration
-    %th Whois privacy
-    %th Auto renewal
-  -@domains.each do |domain|
+.island
+  %table
     %tr
-      %td
-        =domain.fetch("name")
-      %td
-        =domain.fetch("state")
-      %td
-        =domain.fetch("expires_on") || "-"
-      %td
-        =domain.fetch("private_whois")
-      %td
-        =domain.fetch("auto_renew")
+      %th Domain Name
+      %th State
+      %th Expiration
+      %th Whois privacy
+      %th Auto renewal
+    -@domains.each do |domain|
+      %tr
+        %td
+          =domain.fetch("name")
+        %td
+          =domain.fetch("state")
+        %td
+          =domain.fetch("expires_on") || "-"
+        %td
+          =domain.fetch("private_whois")
+        %td
+          =domain.fetch("auto_renew")
 

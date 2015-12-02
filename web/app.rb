@@ -60,7 +60,7 @@ class CsvExportAddon < Sinatra::Base
     if account = @accounts.get(params[:account_id])
       redirect "/domains/#{account.id}/csv"
     else
-      redirect @api_client.authorize_url
+      haml :index
     end
   end
 
