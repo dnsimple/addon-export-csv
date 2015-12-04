@@ -33,6 +33,7 @@ class CsvExportAddon < Sinatra::Base
     domains = @api_client.domains(account.id, account.access_token)
 
     content_type "application/csv"
+    attachment "account-domains.csv"
 
     CSV.generate do |csv|
       domains.each do |domain|
