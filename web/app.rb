@@ -16,11 +16,6 @@ class CsvExportAddon < Sinatra::Base
     )
   end
 
-  after do
-    headers({ "X-Frame-Options" => "ALLOWALL" })
-  end
-
-
   get "/domains/:account_id/csv" do
     account = @accounts.get(params[:account_id]) or halt 403
     @domains = @api_client.domains(account.id, account.access_token)
