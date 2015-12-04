@@ -6,6 +6,8 @@ require_relative '../lib/api_client'
 
 class CsvExportAddon < Sinatra::Base
 
+  set :public_folder, Proc.new { File.join(root, "public") }
+
   before do
     @accounts   = RedisAccountStorage.new
     @api_client = ApiClient.new(
