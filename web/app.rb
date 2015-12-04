@@ -60,4 +60,8 @@ class CsvExportAddon < Sinatra::Base
     end
   end
 
+  get "/" do
+    haml :index
+  end
+
 end
