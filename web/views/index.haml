@@ -1,5 +1,7 @@
 .welcome
-  %h1 OHAI!
-  %p We export your domains from DNSimple to CSV format. You are welcome!
+  %h1 Export your domains from DNSimple to CSV with ease
+  %section.overview
+    %img{src:"/images/overview.png"}
 
-  %a.button{href: @api_client.authorize_url} Login with DNSimple
+  .island
+    %a.button{href: @api_client.authorize_url} Login with DNSimple
