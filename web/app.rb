@@ -9,21 +9,23 @@ module CsvExport
 
     get "/domains" do
       authenticate
-
       @domains = CsvExport.account_service.get_account_domains(current_account.id)
-
       haml :csv
     end
 
     post "/domains" do
       authenticate
 
-      domains = CsvExport.account_service.get_account_domains(current_account.id)
-
       content_type "application/csv"
 
-      CSV.generate(headers: ["Name", "State", "Expiration", "Whois privacy", "Auto renewal"],
-                   write_headers: true) do |csv|
+      CSV.generate(write_headers: true, headers: [
+        "Name",
+        "State",
+        "Expiration",
+        "Whois privacy",
+        "Auto renewal"
+      ]) do |csv|
+        domains = CsvExport.account_service.get_account_domains(current_account.id)
         domains.each do |domain|
           csv << [
             domain["name"],
@@ -35,7 +37,6 @@ module CsvExport
         end
       end
     end
-
 
     get "/callback" do
       account = CsvExport.account_service.authenticate_account(params[:code])
