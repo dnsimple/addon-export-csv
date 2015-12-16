@@ -8,19 +8,17 @@ module CsvExport
     include Authentication
 
     get "/domains" do
-      env["warden"].authenticate!
-      account = env["warden"].user
+      authenticate
 
-      @domains = CsvExport.account_service.get_account_domains(account.id)
+      @domains = CsvExport.account_service.get_account_domains(current_account.id)
 
       haml :csv
     end
 
     post "/domains" do
-      env["warden"].authenticate!
-      account = env["warden"].user
+      authenticate
 
-      domains = CsvExport.account_service.get_account_domains(account.id)
+      domains = CsvExport.account_service.get_account_domains(current_account.id)
 
       content_type "application/csv"
 
@@ -59,12 +57,12 @@ module CsvExport
     end
 
     get "/logout" do
-      env["warden"].logout
+      logout
       redirect "/"
     end
 
     get "/:account_id" do
-      env["warden"].authenticate!
+      authenticate
     end
 
     get "/" do

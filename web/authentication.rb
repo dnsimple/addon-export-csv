@@ -6,7 +6,7 @@ module Authentication
       warden.user
     end
 
-    def authenticate!
+    def authenticate
       warden.authenticate!
     end
 
@@ -23,9 +23,9 @@ module Authentication
   def self.included(base)
     base.instance_eval do
 
-      helpers AuthenticationHelpers
+      enable :sessions
 
-      use Rack::Session::Cookie
+      helpers AuthenticationHelpers
 
       use Warden::Manager do |manager|
         manager.default_strategies :default
