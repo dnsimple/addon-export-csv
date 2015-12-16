@@ -7,6 +7,8 @@ module CsvExport
   class App < Sinatra::Base
     include Authentication
 
+    set :public_folder, Proc.new { File.join(root, "public") }
+
     get "/domains" do
       authenticate
       @domains = CsvExport.account_service.get_account_domains(current_account.id)
@@ -17,6 +19,7 @@ module CsvExport
       authenticate
 
       content_type "application/csv"
+      attachment "account-domains.csv"
 
       CSV.generate(write_headers: true, headers: [
         "Name",
@@ -41,7 +44,6 @@ module CsvExport
     get "/callback" do
       account = CsvExport.account_service.authenticate_account(params[:code])
       session["account_id"] = account.id
-
       redirect "/domains"
     end
 
