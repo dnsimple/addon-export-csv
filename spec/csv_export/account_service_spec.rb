@@ -1,18 +1,19 @@
-require 'account_service'
-
-require 'api_client'
-require 'account'
-require 'account_storage'
+require 'csv_export'
 
 RSpec.describe CsvExport::AccountService do
   subject { described_class.new(account_storage, api_client) }
   let(:account_storage) { CsvExport::RedisAccountStorage.new }
   let(:api_client) { double(ApiClient) }
 
+  let(:account_id) { "1" }
+  let(:access_token) { "access-token" }
+
+  before do
+    Redis.current.flushall
+  end
+
   describe "#authenticate_account" do
     let(:code) { "code" }
-    let(:account_id) { "1" }
-    let(:access_token) { "access-token" }
     let(:authorization) { ApiClient::Auth.new(account_id, access_token) }
 
     before do
@@ -45,6 +46,31 @@ RSpec.describe CsvExport::AccountService do
       end
     end
   end
+
+
+  describe "#get_account" do
+    context "when an account with given id exits" do
+      before do
+        subject.create_account(account_id, access_token)
+      end
+
+      it "returns the account" do
+        account = subject.get_account(account_id)
+
+        expect(account.id).to eq(account_id)
+        expect(account.access_token).to eq(access_token)
+      end
+    end
+
+    context "when no account with given id exits" do
+      it "returns an error" do
+        expect{
+          subject.get_account(account_id)
+        }.to raise_error(CsvExport::Errors::NotFound)
+      end
+    end
+  end
+
 
   describe "#get_account_domains" do
     context "when the account is authenticated" do

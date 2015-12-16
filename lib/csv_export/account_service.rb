@@ -8,8 +8,16 @@ module CsvExport
 
     def authenticate_account(code)
       auth = @api_client.authorization(code)
-      @accounts.store(Account.new(auth.account_id, auth.access_token))
+      create_account(auth.account_id, auth.access_token)
     end
 
+    def create_account(account_id, access_token)
+      account = Account.new(account_id, access_token)
+      @accounts.store(account)
+    end
+
+    def get_account(account_id)
+      @accounts.get(account_id) or raise Errors::NotFound, "No account with ID=#{account_id} found"
+    end
   end
 end
