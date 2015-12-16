@@ -1,23 +1,13 @@
 require 'sinatra/base'
 
-require_relative '../lib/csv_export/account'
-require_relative '../lib/csv_export/account_storage'
-
-require_relative '../lib/api_client'
+require_relative '../lib/csv_export'
 
 module CsvExport
   class App < Sinatra::Base
 
     before do
-      @accounts   = RedisAccountStorage.new
-      @api_client = ApiClient.new(
-        ENV["API_ENDPOINT"],
-        ENV["API_PORT"],
-        ENV["CLIENT_ID"],
-        ENV["CLIENT_SECRET"]
-      )
-
-      @account_service = AccountService.new(@accounts, @api_client)
+      @accounts   = CsvExport.account_storage
+      @api_client = CsvExport.api_client
     end
 
     get "/domains/:account_id/csv" do
@@ -49,7 +39,7 @@ module CsvExport
 
 
     get "/callback" do
-      @account_service.authenticate_account(params[:code])
+      CsvExport.account_service.authenticate_account(params[:code])
 
       redirect "/domains/#{auth.account_id}/csv"
     end
