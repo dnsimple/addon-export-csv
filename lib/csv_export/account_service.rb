@@ -12,8 +12,9 @@ module CsvExport
     end
 
     def create_account(account_id, access_token)
-      account = Account.new(account_id, access_token)
-      @accounts.store(account)
+      Account.new(account_id, access_token).tap do |account|
+        @accounts.store(account)
+      end
     end
 
     def get_account(account_id)

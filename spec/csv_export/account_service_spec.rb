@@ -21,12 +21,12 @@ RSpec.describe CsvExport::AccountService do
     end
 
     context "when no account with that id exists" do
-      it "stores the account" do
-        subject.authenticate_account(code)
+      it "stores and returns the account" do
+        account = subject.authenticate_account(code)
 
-        account = account_storage.get(account_id)
         expect(account.id).to eq(account_id)
         expect(account.access_token).to eq(access_token)
+        expect(account_storage.get(account_id)).not_to be_nil
       end
     end
 
