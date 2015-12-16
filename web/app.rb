@@ -6,19 +6,18 @@ module CsvExport
   class App < Sinatra::Base
 
     before do
-      @accounts   = CsvExport.account_storage
       @api_client = CsvExport.api_client
     end
 
     get "/domains/:account_id/csv" do
-      account = @accounts.get(params[:account_id]) or halt 403
+      account = CsvExport.account_service.get_account(params[:account_id]) or halt 403
       @domains = @api_client.domains(account.id, account.access_token)
 
       haml :csv
     end
 
     post "/domains/:account_id/csv" do
-      account = @accounts.get(params[:account_id]) or halt 403
+      account = CsvExport.account_service.get_account(params[:account_id]) or halt 403
       domains = @api_client.domains(account.id, account.access_token)
 
       content_type "application/csv"
@@ -45,9 +44,10 @@ module CsvExport
     end
 
     get "/:account_id" do
-      if account = @accounts.get(params[:account_id])
+      begin
+        account = CsvExport.account_service.get_account(params[:account_id])
         redirect "/domains/#{account.id}/csv"
-      else
+      rescue CsvExport::Errors::NotFound
         haml :index
       end
     end
