@@ -2,6 +2,7 @@ require 'sinatra/base'
 
 require_relative '../lib/csv_export/account'
 require_relative '../lib/csv_export/account_storage'
+
 require_relative '../lib/api_client'
 
 module CsvExport
@@ -15,6 +16,8 @@ module CsvExport
         ENV["CLIENT_ID"],
         ENV["CLIENT_SECRET"]
       )
+
+      @account_service = AccountService.new(@accounts, @api_client)
     end
 
     get "/domains/:account_id/csv" do
@@ -46,9 +49,7 @@ module CsvExport
 
 
     get "/callback" do
-      auth = @api_client.authorization(params[:code])
-
-      @accounts.store(Account.new(auth.account_id, auth.access_token))
+      @account_service.authenticate_account(params[:code])
 
       redirect "/domains/#{auth.account_id}/csv"
     end
