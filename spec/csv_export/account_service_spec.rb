@@ -74,17 +74,33 @@ RSpec.describe CsvExport::AccountService do
 
   describe "#get_account_domains" do
     context "when the account is authenticated" do
-      context "when the API credentials are valid" do
-        it "returns the domain's data"
+      before do
+        subject.create_account(account_id, access_token)
       end
 
       context "when the API credentials are valid" do
+        let(:domain_data) { [] }
+
+        it "returns the domain's data" do
+          allow(api_client).to receive(:domains).with(account_id, access_token).and_return(domain_data)
+
+          result = subject.get_account_domains(account_id)
+
+          expect(result).to eq(domain_data)
+        end
+      end
+
+      context "when the API credentials are not valid" do
         it "returns an error"
       end
     end
 
     context "when the account is not authenticated" do
-      it "returns an error"
+      it "returns an error" do
+        expect {
+          subject.get_account_domains(account_id)
+        }.to raise_error(CsvExport::Errors::NotFound)
+      end
     end
   end
 
