@@ -5,20 +5,16 @@ require_relative '../lib/csv_export'
 module CsvExport
   class App < Sinatra::Base
 
-    before do
-      @api_client = CsvExport.api_client
-    end
-
     get "/domains/:account_id/csv" do
       account = CsvExport.account_service.get_account(params[:account_id]) or halt 403
-      @domains = @api_client.domains(account.id, account.access_token)
+      @domains = CsvExport.account_service.get_account_domains(account.id)
 
       haml :csv
     end
 
     post "/domains/:account_id/csv" do
       account = CsvExport.account_service.get_account(params[:account_id]) or halt 403
-      domains = @api_client.domains(account.id, account.access_token)
+      domains = CsvExport.account_service.get_account_domains(account.id)
 
       content_type "application/csv"
 
