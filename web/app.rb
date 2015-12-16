@@ -1,7 +1,7 @@
 require 'sinatra/base'
 
-require_relative '../lib/account'
-require_relative '../lib/account_storage'
+require_relative '../lib/csv_export/account'
+require_relative '../lib/csv_export/account_storage'
 require_relative '../lib/api_client'
 
 module CsvExport
