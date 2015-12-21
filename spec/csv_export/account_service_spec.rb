@@ -104,4 +104,47 @@ RSpec.describe CsvExport::AccountService do
     end
   end
 
+
+  describe "#get_account_domains_as_csv" do
+    context "when the account is authenticated" do
+      before do
+        subject.create_account(account_id, access_token)
+      end
+
+      context "when the API credentials are valid" do
+        let(:domain_data) do
+          [
+            {
+              "name" => "example.com",
+              "state" => "registered",
+              "expires_on" => "2017-12-19",
+              "private_whois" => "true",
+              "auto_renew" => "false"
+            }
+          ]
+        end
+
+        it "returns the domain's data" do
+          allow(api_client).to receive(:domains).with(account_id, access_token).and_return(domain_data)
+
+          result = subject.get_account_domains_as_csv(account_id)
+
+          expect(result).to eq("Name,State,Expiration,Whois privacy,Auto renewal\nexample.com,registered,2017-12-19,true,false\n")
+        end
+      end
+
+      context "when the API credentials are not valid" do
+        it "returns an error"
+      end
+    end
+
+    context "when the account is not authenticated" do
+      it "returns an error" do
+        expect {
+          subject.get_account_domains_as_csv(account_id)
+        }.to raise_error(CsvExport::Errors::NotFound)
+      end
+    end
+  end
+
 end
