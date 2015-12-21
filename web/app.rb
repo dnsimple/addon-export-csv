@@ -11,6 +11,7 @@ module CsvExport
 
     get "/domains" do
       authenticate
+
       @domains = CsvExport.account_service.get_account_domains(current_account.id)
       haml :csv
     end
@@ -20,25 +21,7 @@ module CsvExport
 
       content_type "application/csv"
       attachment "account-domains.csv"
-
-      CSV.generate(write_headers: true, headers: [
-        "Name",
-        "State",
-        "Expiration",
-        "Whois privacy",
-        "Auto renewal"
-      ]) do |csv|
-        domains = CsvExport.account_service.get_account_domains(current_account.id)
-        domains.each do |domain|
-          csv << [
-            domain["name"],
-            domain["state"],
-            domain["expires_on"],
-            domain["private_whois"],
-            domain["auto_renew"]
-          ]
-        end
-      end
+      CsvExport.account_service.export_account_domains(current_account.id)
     end
 
     get "/callback" do
