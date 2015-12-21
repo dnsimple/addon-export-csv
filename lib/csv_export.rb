@@ -1,9 +1,9 @@
-require_relative 'api_client'
-
 require_relative 'csv_export/errors'
 require_relative 'csv_export/account'
 require_relative 'csv_export/account_service'
 require_relative 'csv_export/account_storage'
+
+require_relative 'api_client'
 
 
 module CsvExport
