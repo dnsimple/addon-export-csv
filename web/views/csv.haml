@@ -10,16 +10,19 @@
       %th Expiration
       %th Whois privacy
       %th Auto renewal
-    -@domains.each do |domain|
-      %tr
-        %td
-          =domain.fetch("name")
-        %td
-          =domain.fetch("state")
-        %td
-          =domain.fetch("expires_on") || "-"
-        %td
-          =domain.fetch("private_whois")
-        %td
-          =domain.fetch("auto_renew")
+    - if @domains.nil?
+      You are currently managing zero domains under this account
+    - else
+      -@domains.each do |domain|
+        %tr
+          %td
+            =domain.fetch("name")
+          %td
+            =domain.fetch("state")
+          %td
+            =domain.fetch("expires_on") || "-"
+          %td
+            =domain.fetch("private_whois")
+          %td
+            =domain.fetch("auto_renew")
 
