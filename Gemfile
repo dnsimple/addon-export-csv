@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'bugsnag'
 gem 'dotenv'
 gem 'haml'
 gem 'httparty'
