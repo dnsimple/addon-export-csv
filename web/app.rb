@@ -1,11 +1,14 @@
 require 'sinatra/base'
 
 require_relative 'authentication'
+require_relative 'error_reporting'
+
 require_relative '../lib/csv_export'
 
 module CsvExport
   class App < Sinatra::Base
     include Authentication
+    include ErrorReporting
 
     set :public_folder, Proc.new { File.join(root, "public") }
 
