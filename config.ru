@@ -5,7 +5,7 @@ require 'dotenv'
 
 Dotenv.load
 
-CsvExportAddon.configure(:production) do
+CsvExport::App.configure(:production) do
   Sprockets::Sass.options[:style] = :compressed
   Sprockets::Sass.options[:line_comments] = false
 end
@@ -17,5 +17,5 @@ map '/assets' do
 end
 
 map '/' do
-  run CsvExportAddon
+  run CsvExport::App
 end

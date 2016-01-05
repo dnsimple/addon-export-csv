@@ -1,70 +1,59 @@
 require 'sinatra/base'
 
-require_relative '../lib/account'
-require_relative '../lib/account_storage'
-require_relative '../lib/api_client'
+require_relative 'authentication'
+require_relative '../lib/csv_export'
 
-class CsvExportAddon < Sinatra::Base
+module CsvExport
+  class App < Sinatra::Base
+    include Authentication
 
-  set :public_folder, Proc.new { File.join(root, "public") }
+    set :public_folder, Proc.new { File.join(root, "public") }
 
-  before do
-    @accounts   = RedisAccountStorage.new
-    @api_client = ApiClient.new(
-      ENV["API_ENDPOINT"],
-      ENV["API_PORT"],
-      ENV["CLIENT_ID"],
-      ENV["CLIENT_SECRET"]
-    )
-  end
+    get "/domains" do
+      authenticate
 
-  get "/domains/:account_id/csv" do
-    account = @accounts.get(params[:account_id]) or halt 403
-    @domains = @api_client.domains(account.id, account.access_token)
-
-    haml :csv
-  end
-
-  post "/domains/:account_id/csv" do
-    account = @accounts.get(params[:account_id]) or halt 403
-    domains = @api_client.domains(account.id, account.access_token)
-
-    content_type "application/csv"
-    attachment "account-domains.csv"
-
-    CSV.generate(headers: ["Name", "State", "Expiration", "Whois privacy", "Auto renewal"],
-                 write_headers: true) do |csv|
-      domains.each do |domain|
-        csv << [
-          domain["name"],
-          domain["state"],
-          domain["expires_on"],
-          domain["private_whois"],
-          domain["auto_renew"]
-        ]
-      end
+      @domains = CsvExport.account_service.get_account_domains(current_account.id)
+      haml :csv
     end
-  end
 
+    post "/domains" do
+      authenticate
 
-  get "/callback" do
-    auth = @api_client.authorization(params[:code])
+      content_type "application/csv"
+      attachment "account-domains.csv"
+      CsvExport.account_service.export_account_domains(current_account.id)
+    end
 
-    @accounts.store(Account.new(auth.account_id, auth.access_token))
+    get "/callback" do
+      account = CsvExport.account_service.authenticate_account(params[:code])
+      session["account_id"] = account.id
+      redirect "/domains"
+    end
 
-    redirect "/domains/#{auth.account_id}/csv"
-  end
+    get "/unauthenticated" do
+      redirect "/login"
+    end
 
-  get "/:account_id" do
-    if account = @accounts.get(params[:account_id])
-      redirect "/domains/#{account.id}/csv"
-    else
+    post "/unauthenticated" do
+      redirect "/login"
+    end
+
+    get "/login" do
+      redirect CsvExport.api_client.authorize_url
+    end
+
+    get "/logout" do
+      logout
+      redirect "/"
+    end
+
+    get "/:account_id" do
+      authenticate
+    end
+
+    get "/" do
       haml :index
     end
-  end
 
-  get "/" do
-    haml :index
   end
-
 end
