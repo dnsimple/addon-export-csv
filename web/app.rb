@@ -24,7 +24,7 @@ module CsvExport
 
       content_type "application/csv"
       attachment "account-domains.csv"
-      CsvExport.account_service.export_account_domains(current_account.id)
+      CsvExport.account_service.get_account_domains_as_csv(current_account.id)
     end
 
     get "/callback" do
