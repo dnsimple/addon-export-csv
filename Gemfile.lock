@@ -1,6 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    bugsnag (2.8.12)
+      json (~> 1.7, >= 1.7.7)
     dotenv (2.0.2)
     haml (4.0.7)
       tilt
@@ -36,6 +38,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bugsnag
   dotenv
   haml
   httparty
