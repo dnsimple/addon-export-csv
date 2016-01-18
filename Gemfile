@@ -1,9 +1,11 @@
 source 'https://rubygems.org'
+ruby '2.2.0'
 
 gem 'bugsnag'
 gem 'dotenv'
 gem 'haml'
 gem 'httparty'
+gem 'puma'
 gem 'redis'
 gem 'sass'
 gem 'sinatra'
