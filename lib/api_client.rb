@@ -24,9 +24,8 @@ class ApiClient
   end
 
   def domains(account_id, access_token)
-    query    = { "_api" => "1" }
     headers  = { "Authorization" => "Bearer #{access_token}" }
-    response = HTTParty.get("#{@url}:#{@port}/v2/#{account_id}/domains", query: query, headers: headers)
+    response = HTTParty.get("#{@url}:#{@port}/v2/#{account_id}/domains", headers: headers)
     response["data"]
   end
 
