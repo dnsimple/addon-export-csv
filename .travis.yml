@@ -1,0 +1,21 @@
+language: ruby
+rvm:
+- 2.2.0
+- 2.3.0
+
+cache:
+- bundler
+matrix:
+  allow_failures:
+  - rvm: 2.3.0
+
+script:
+- bundle exec rspec
+
+services:
+- redis-server
+
+notifications:
+  email: false
+  slack:
+    secure: "1VIi3dziVthHxuLAGISwQv/Bkp+CuFHbe+FvtRi81C+6MQ3qLQoeeGi4PNCAyRSSlAmnCrhVNo0uIkACu8bepEKMF4QaabISmk0O3qs3Quvkfy14R7exFCOoz3VvjmoLahSOa/3eaYmwlOT78A+K1eHcmMH40tIShATkf9qXyl35sHjE6dmQZkq0tmzCqFx+RsdBm5ay7QmGbIXmdjspoSx7Vkyr13MHfG8eNZKgpm5y7CYLbrF23F2Mv5A8+Of34VWzeVqbhnkRwYdmoe/IEeLIEALsLJuauNWc/OrDtmO2R3CZS7KjbaWXbz0LnogUaEU70L2urZJVcHpI7NqTATfhZ/etpTPk6WGoo0jjLe8AQSljsx+k3BpMfjbX+dKA+4L2ABAPlBsuAgSjQAIkUl2TpV6cdJpROZkDUWuFGNSMUH963UKJz85mxLxeYuDB2vT1AtFS3qpOvNg3fV9Pq0nh8Xfxi63ytxx87H57XrOmZj+jYhbUHfUhd+VuZmEy+cgPg5UxeeDLGXa6jUWevZAZehROpvU4rz42s5fQlxUiT6hJKnyRDQDvAdKNnJEXcjoBzD5IG4mRNjd6fwWeOj2n9JCEFXLOMQarofwzthDLPlrdy47TGLedk7p8ngQ+t6Pv9K3RtfW2FuSODcRw8oZlqi/FFLJ4/LEVFX3ASp4="

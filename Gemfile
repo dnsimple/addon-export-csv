@@ -12,3 +12,7 @@ gem 'sinatra'
 gem 'sprockets'
 gem 'sprockets-sass'
 gem 'warden'
+
+group :test do
+  gem "rspec"
+end
