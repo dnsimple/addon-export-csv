@@ -35,15 +35,15 @@ There are certain restrictions about how the DNSimple API works in the developme
 
 You will need to configure an OAuth application on your DNSimple development environment so the addon authentication can function properly.
 
-The first thing you should do is enable the OAuth feature for your user.
+1. The first thing you should do is enable the OAuth feature for your user.
 
-Then from your account's settings choose *Applications*. Select the *Developer applications* tab and click on *New application*. This is the information you need to input:
+1. Then from your account's settings choose *Applications*. Select the *Developer applications* tab and click on *New application*. This is the information you need to input:
 
-- *Application name*: `CSV Export addon`
-- *Homepage URL*: `http://localhost:5000`
-- *Authorization Callback URL*: `http://localhost:5000/callback`
+    - *Application name*: `CSV Export Addon`
+    - *Homepage URL*: `http://localhost:5000`
+    - *Authorization Callback URL*: `http://localhost:5000/callback`
 
-Once you have created the application make sure to copy the `Client ID` and the `Client Secret` as you will need them for the next step.
+1. Once you have created the application make sure to copy the `Client ID` and the `Client Secret` as you will need them for the next step.
 
 
 #### Setup environment variables
