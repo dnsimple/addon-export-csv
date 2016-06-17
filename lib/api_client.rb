@@ -4,9 +4,7 @@ require 'dnsimple'
 class ApiClient
   attr_reader :client_id, :client_secret
 
-  def initialize(host, port, client_id, client_secret)
-    @host = host
-    @port = port
+  def initialize(client_id, client_secret)
     @client_id = client_id
     @client_secret = client_secret
   end

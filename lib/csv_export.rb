@@ -17,7 +17,7 @@ module CsvExport
   end
 
   def self.api_client
-    @api_client ||= ApiClient.new(ENV["API_ENDPOINT"], ENV["API_PORT"], ENV["CLIENT_ID"], ENV["CLIENT_SECRET"])
+    @api_client ||= ApiClient.new(ENV["CLIENT_ID"], ENV["CLIENT_SECRET"])
   end
 
 end
