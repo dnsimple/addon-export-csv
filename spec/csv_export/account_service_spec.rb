@@ -14,10 +14,10 @@ RSpec.describe CsvExport::AccountService do
 
   describe "#authenticate_account" do
     let(:code) { "code" }
-    let(:authorization) { ApiClient::Auth.new(account_id, access_token) }
+    let(:authorization) { Dnsimple::Struct::OauthToken.new(account_id: account_id, access_token: access_token) }
 
     before do
-      allow(api_client).to receive(:authorization).with(code).and_return(authorization)
+      allow(api_client).to receive(:authorization).with(code, {}).and_return(authorization)
     end
 
     context "when no account with that id exists" do
@@ -64,7 +64,7 @@ RSpec.describe CsvExport::AccountService do
 
     context "when no account with given id exits" do
       it "returns an error" do
-        expect{
+        expect {
           subject.get_account(account_id)
         }.to raise_error(CsvExport::Errors::NotFound)
       end
@@ -114,13 +114,13 @@ RSpec.describe CsvExport::AccountService do
       context "when the API credentials are valid" do
         let(:domain_data) do
           [
-            {
+            Dnsimple::Struct::Domain.new({
               "name" => "example.com",
               "state" => "registered",
               "expires_on" => "2017-12-19",
               "private_whois" => "true",
               "auto_renew" => "false"
-            }
+            })
           ]
         end
 

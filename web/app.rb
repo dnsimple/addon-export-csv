@@ -28,7 +28,7 @@ module CsvExport
     end
 
     get "/callback" do
-      account = CsvExport.account_service.authenticate_account(params[:code])
+      account = CsvExport.account_service.authenticate_account(params[:code], state: session[:oauth_state])
       session["account_id"] = account.id
       redirect "/domains"
     end
@@ -42,7 +42,7 @@ module CsvExport
     end
 
     get "/login" do
-      redirect CsvExport.api_client.authorize_url
+      redirect CsvExport.api_client.authorize_url(state: oauth_state)
     end
 
     get "/logout" do
@@ -56,6 +56,13 @@ module CsvExport
 
     get "/" do
       haml :index
+    end
+
+
+    private
+
+    def oauth_state
+      session[:oauth_state] = Digest::MD5.hexdigest(rand(100000).to_s)
     end
 
   end

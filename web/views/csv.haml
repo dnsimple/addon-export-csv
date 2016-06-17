@@ -16,13 +16,13 @@
       -@domains.each do |domain|
         %tr
           %td
-            =domain.fetch("name")
+            =domain.name
           %td
-            =domain.fetch("state")
+            =domain.state
           %td
-            =domain.fetch("expires_on") || "-"
+            =domain.expires_on || "-"
           %td
-            =domain.fetch("private_whois")
+            =domain.private_whois
           %td
-            =domain.fetch("auto_renew")
+            =domain.auto_renew
 

@@ -6,8 +6,8 @@ module CsvExport
       @api_client = api_client
     end
 
-    def authenticate_account(code)
-      auth = @api_client.authorization(code)
+    def authenticate_account(code, options = {})
+      auth = @api_client.authorization(code, options)
       create_account(auth.account_id, auth.access_token)
     end
 
@@ -42,11 +42,11 @@ module CsvExport
       ]) do |csv|
         domain_data.each do |domain|
           csv << [
-            domain["name"],
-            domain["state"],
-            domain["expires_on"],
-            domain["private_whois"],
-            domain["auto_renew"]
+            domain.name,
+            domain.state,
+            domain.expires_on,
+            domain.private_whois,
+            domain.auto_renew
           ]
         end
       end

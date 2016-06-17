@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby '2.2.0'
 
 gem 'bugsnag'
+gem 'dnsimple', github: 'aetrion/dnsimple-ruby'
 gem 'dotenv'
 gem 'haml'
 gem 'httparty'

@@ -30,6 +30,8 @@ There are certain restrictions about how the DNSimple API works in the developme
 127.0.0.1  api.dev.dnsimple.com
 ```
 
+If you are using other environment (like Staging or Sandbox) instead of your development environment this step is not required.
+
 
 #### Setup the OAuth application
 
@@ -40,7 +42,7 @@ You will need to configure an OAuth application on your DNSimple development env
 1. Then from your account's settings choose *Applications*. Select the *Developer applications* tab and click on *New application*. This is the information you need to input:
 
     - *Application name*: `CSV Export Addon`
-    - *Homepage URL*: `http://localhost:5000`
+    - *Homepage URL*: `https://localhost:5000`
     - *Authorization Callback URL*: `http://localhost:5000/callback`
 
 1. Once you have created the application make sure to copy the `Client ID` and the `Client Secret` as you will need them for the next step.
@@ -51,8 +53,7 @@ You will need to configure an OAuth application on your DNSimple development env
 From the addon project home create a `.env` file. This file is in the `.gitignore` file each one of us can have a different one. You will need the following environment variables there:
 
 ```
-export API_ENDPOINT="dev.dnsimple.com"
-export API_PORT="3000"
+export DNSIMLE_BASE_URL="https://api.sandbox.dnsimple.com"
 export CLIENT_ID="xxxx"
 export CLIENT_SECRET="xxxx"
 ```

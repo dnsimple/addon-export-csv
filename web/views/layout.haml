@@ -18,7 +18,8 @@
           %span CSV
           %span Export
         %nav
-          %a{href: "/logout"} Logout
+          -if current_account
+            %a{href: "/logout"} Logout
     %main.container
       =yield
     %footer
