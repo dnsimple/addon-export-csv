@@ -30,7 +30,7 @@ There are certain restrictions about how the DNSimple API works in the developme
 127.0.0.1  api.dev.dnsimple.com
 ```
 
-If you are using other environment (like Staging or Sandbox) for your tests this step is not required.
+If you are using other environment (like Staging or Sandbox) instead of your development environment this step is not required.
 
 
 #### Setup the OAuth application
