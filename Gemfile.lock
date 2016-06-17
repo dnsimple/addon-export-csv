@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/aetrion/dnsimple-ruby.git
+  revision: 5347a6498d50a908786d3bf11c22a6258015e856
+  specs:
+    dnsimple (3.0.0)
+      httparty
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -54,6 +61,7 @@ PLATFORMS
 
 DEPENDENCIES
   bugsnag
+  dnsimple!
   dotenv
   haml
   httparty
