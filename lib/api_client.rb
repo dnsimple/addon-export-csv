@@ -9,14 +9,16 @@ class ApiClient
     @client_secret = client_secret
   end
 
-  def authorize_url(state: "12345678")
-    client = Dnsimple::Client.new
-    client.oauth.authorize_url(client_id, state: state)
+  def authorize_url(state: nil)
+    options = {state: state} if state
+    client  = Dnsimple::Client.new
+    client.oauth.authorize_url(client_id, options)
   end
 
-  def authorization(code, state: "12345678")
+  def authorization(code, state: nil)
+    options = {state: state} if state
     client = Dnsimple::Client.new
-    client.oauth.exchange_authorization_for_token(code, client_id, client_secret, state: state)
+    client.oauth.exchange_authorization_for_token(code, client_id, client_secret, options)
   end
 
   def domains(account_id, access_token)

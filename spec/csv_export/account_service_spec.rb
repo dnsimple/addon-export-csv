@@ -17,7 +17,7 @@ RSpec.describe CsvExport::AccountService do
     let(:authorization) { Dnsimple::Struct::OauthToken.new(account_id: account_id, access_token: access_token) }
 
     before do
-      allow(api_client).to receive(:authorization).with(code).and_return(authorization)
+      allow(api_client).to receive(:authorization).with(code, {}).and_return(authorization)
     end
 
     context "when no account with that id exists" do

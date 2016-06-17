@@ -6,8 +6,8 @@ module CsvExport
       @api_client = api_client
     end
 
-    def authenticate_account(code)
-      auth = @api_client.authorization(code)
+    def authenticate_account(code, options = {})
+      auth = @api_client.authorization(code, options)
       create_account(auth.account_id, auth.access_token)
     end
 
