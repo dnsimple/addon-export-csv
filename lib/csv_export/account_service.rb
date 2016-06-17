@@ -42,11 +42,11 @@ module CsvExport
       ]) do |csv|
         domain_data.each do |domain|
           csv << [
-            domain["name"],
-            domain["state"],
-            domain["expires_on"],
-            domain["private_whois"],
-            domain["auto_renew"]
+            domain.name,
+            domain.state,
+            domain.expires_on,
+            domain.private_whois,
+            domain.auto_renew
           ]
         end
       end
