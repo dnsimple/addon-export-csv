@@ -42,7 +42,7 @@ export CLIENT_ID="xxxx"
 export CLIENT_SECRET="xxxx"
 ```
 
-#### Setup the host name for your development environment
+### Setup the host name for your development environment
 
 **WARNING:** _This step is only required if you want to test the add-on against your local development environment of the DNSimple app.  If you are using other environment (like Staging or Sandbox) instead of your development environment this step is not required._
 
