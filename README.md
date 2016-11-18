@@ -37,7 +37,7 @@ You will need to configure an OAuth application on your DNSimple account so the 
 From the add-on project home create a `.env` file. This file is in the `.gitignore` file each one of us can have a different one. You will need the following environment variables there:
 
 ```
-export DNSIMLE_BASE_URL="https://api.sandbox.dnsimple.com"
+export DNSIMPLE_BASE_URL="https://api.sandbox.dnsimple.com"
 export CLIENT_ID="xxxx"
 export CLIENT_SECRET="xxxx"
 ```
