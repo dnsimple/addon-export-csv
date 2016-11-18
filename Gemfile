@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.2.0'
+ruby '2.3.1'
 
 gem 'bugsnag'
 gem 'dnsimple', github: 'aetrion/dnsimple-ruby'
