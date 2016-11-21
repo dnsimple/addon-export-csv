@@ -1,28 +1,27 @@
 %form{method: "POST"}
-  %button.button{type: "submit"}
+  %button.f6.f5-ns.fw6.dib.ba.b--black-20.bg-blue.white.ph3.ph4-ns.pv2.pv3-ns.br2.dim.no-underline.pointer{type: "submit"}
     Download CSV
 
-.island
-  %table
-    %tr
-      %th Domain Name
-      %th State
-      %th Expiration
-      %th Whois privacy
-      %th Auto renewal
+.pt3.pb3.overflow-x-auto
+  %table.w-100.collapse.ba.b--light-gray
+    %tr.striped--near-white
+      %th.w-50.pv3.ph3.tl.f6.fw6 Domain Name
+      %th.pv3.ph3.tl.f6.fw6 State
+      %th.pv3.ph3.tl.f6.fw6 Expiration
+      %th.pv3.ph3.tl.f6.fw6 Whois privacy
+      %th.pv3.ph3.tl.f6.fw6 Auto renewal
     - if @domains.nil?
       You are currently managing zero domains under this account
     - else
       -@domains.each do |domain|
-        %tr
-          %td
+        %tr.striped--near-white
+          %td.pv3.ph3
             =domain.name
-          %td
+          %td.pv3.ph3
             =domain.state
-          %td
+          %td.pv3.ph3
             =domain.expires_on || "-"
-          %td
+          %td.pv3.ph3
             =domain.private_whois
-          %td
+          %td.pv3.ph3
             =domain.auto_renew
-

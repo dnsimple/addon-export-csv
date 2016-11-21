@@ -8,18 +8,15 @@
     %meta{:name => "apple-mobile-web-app-capable", :content => "yes"}
     %meta{name:'viewport', content:'width=device-width,initial-scale=1'}
     %link{rel:'stylesheet', href:'/assets/style.css'}
-  %body
-    %header
-      .container
-        %img{src: "/images/logo.svg"}
-        %aside
-          %span DNSimple
-          %span Domain
-          %span CSV
-          %span Export
-        %nav
+  %body.sans-serif.bg-white.near-black
+    %header.w-100.pa3.ph5-ns.mb4.bg-near-white.bb.b--light-gray
+      .dt.w-100.mw9.center
+        .dtc.w-50.v-mid
+          %img.dib.v-mid.w2{src: "/images/logo.svg"}
+          %span.dib.v-mid CSV Export
+        .dtc.w-50.v-mid.tr
           -if current_account
-            %a{href: "/logout"} Logout
-    %main.container
+            %a.link.dim.mid-gray{href: "/logout"} Logout
+    %main.w-100.pa3.ph5-ns
       =yield
     %footer
