@@ -16,6 +16,15 @@
       .dn-navbar-nav
         -if current_account
           %a.link.dim.blue{href: "/logout"} Logout
-    %main.container
+    %main.container.min-vh-100
       =yield
-    %footer
+    %footer.dn-footer.container
+      .cf
+        .fl.w-50
+          %img.dib.v-mid.w2{src: "/images/logo.svg"}
+          %span.dib.v-mid CSV Export
+          %p.gray
+            An add-on from DNSimple
+        .fl.w-50.tr
+          %img{src: "/images/dnsimple-logo-footer.svg"}
+
