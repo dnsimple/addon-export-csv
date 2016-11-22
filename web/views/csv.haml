@@ -1,11 +1,11 @@
 %form{method: "POST"}
-  %button.button{type: "submit"}
+  %button.dn-btn.dn-btn-primary{type: "submit"}
     Download CSV
 
-.island
-  %table
+.pt3.pb3.overflow-x-auto
+  %table.dn-table
     %tr
-      %th Domain Name
+      %th.w-50 Domain Name
       %th State
       %th Expiration
       %th Whois privacy
@@ -25,4 +25,3 @@
             =domain.private_whois
           %td
             =domain.auto_renew
-

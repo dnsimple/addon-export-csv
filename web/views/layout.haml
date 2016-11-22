@@ -9,17 +9,23 @@
     %meta{name:'viewport', content:'width=device-width,initial-scale=1'}
     %link{rel:'stylesheet', href:'/assets/style.css'}
   %body
-    %header
-      .container
-        %img{src: "/images/logo.svg"}
-        %aside
-          %span DNSimple
-          %span Domain
-          %span CSV
-          %span Export
-        %nav
-          -if current_account
-            %a{href: "/logout"} Logout
-    %main.container
+    %header.dn-navbar.container.mb4
+      .dn-navbar-branding
+        %img.dib.v-mid.w2{src: "/images/logo.svg"}
+        %span.dib.v-mid CSV Export
+      .dn-navbar-nav
+        -if current_account
+          %a.link.dim.blue{href: "/logout"} Logout
+    %main.container.min-vh-100
       =yield
-    %footer
+    %footer.dn-footer.container
+      .cf
+        .fl.w-50
+          %img.dib.v-mid.w2{src: "/images/logo.svg"}
+          %span.dib.v-mid CSV Export
+          %p.gray
+            An add-on from DNSimple
+        .fl.w-50.tr
+          %a.link.dim{href: "https://dnsimple.com"}
+            %img{src: "/images/dnsimple-logo-footer.svg"}
+
