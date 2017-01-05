@@ -47,7 +47,7 @@ module CsvExport
 
     get "/logout" do
       logout
-      redirect "/"
+      haml :byebye
     end
 
     get "/:account_id" do
