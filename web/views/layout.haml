@@ -9,16 +9,16 @@
     %meta{name:'viewport', content:'width=device-width,initial-scale=1'}
     %link{rel:'stylesheet', href:'https://make-it-nice.dnsimple.com/css/dnsimple-tachyons-1.0.0.min.css'}
   %body
-    %header.dn-navbar.container.mb4
+    %header.dn-navbar.pa3.mb4
       .dn-navbar-branding
         %img.dib.v-mid.w2{src: "/images/logo.svg"}
         %span.dib.v-mid CSV Export
       .dn-navbar-nav
         -if current_account
           %a.link.dim.blue{href: "/logout"} Logout
-    %main.container.min-vh-100
+    %main.mw8.center.min-vh-100
       =yield
-    %footer.dn-footer.container
+    %footer.dn-footer.pa3
       .cf
         .fl.w-50
           %img.dib.v-mid.w2{src: "/images/logo.svg"}
