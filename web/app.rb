@@ -55,7 +55,7 @@ module CsvExport
     end
 
     get "/" do
-      haml :index
+      redirect "/login"
     end
 
 
