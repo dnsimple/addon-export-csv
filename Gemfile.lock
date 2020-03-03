@@ -23,7 +23,7 @@ GEM
     multi_json (1.13.1)
     multi_xml (0.6.0)
     puma (3.11.3)
-    rack (1.6.9)
+    rack (1.6.13)
     rack-protection (1.5.5)
       rack
     rake (12.3.0)
