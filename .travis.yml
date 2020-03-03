@@ -6,9 +6,6 @@ rvm:
 cache:
   - bundler
 
-script:
-  - bundle exec rspec
-
 services:
   - redis-server
 
