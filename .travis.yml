@@ -1,15 +1,16 @@
 language: ruby
+
 rvm:
-- 2.3.1
+  - 2.5.0
 
 cache:
-- bundler
+  - bundler
 
 script:
-- bundle exec rspec
+  - bundle exec rspec
 
 services:
-- redis-server
+  - redis-server
 
 notifications:
   email: false
